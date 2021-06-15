@@ -13,7 +13,9 @@ node_modules/
 
 # misc
 .DS_Store
-
+app_staging.yaml
+app_production.yaml
+app_development.yaml
 .env
 .env.local
 .env.development.local
