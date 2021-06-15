@@ -1,13 +1,17 @@
 import nodemailer from "nodemailer";
 import sgTransport from "nodemailer-sendgrid-transport";
 import hbs from "nodemailer-express-handlebars";
+import customEnv from "custom-env";
 
-// * Rimbo rent emails
-// const rimboEmail = "info@rimbo.rent";
-// const testEmail = "paniaguasanchezadrian@gmail.com";
-const testEmail = "test@rimbo.rent";
-// const testEmail = "gloriya@rimbo.rent";
-// const testEmail = "victor@rimbo.rent";
+// Env variables
+customEnv.env(true);
+const {
+  RIMBO_EMAIL,
+  SENDGRID_API,
+  URL_ACCEPT_TT_BY_RIMBO,
+  URL_REJECT_TT_BY_RIMBO,
+  URL_ACCEPT_TT_CARD_BY_RIMBO,
+} = process.env;
 
 // ! RJ2 Form => RJ9 Email
 const sendRJ2FormEmails = async (req, res) => {
@@ -16,7 +20,7 @@ const sendRJ2FormEmails = async (req, res) => {
   const transporterRJ9 = nodemailer.createTransport(
     sgTransport({
       auth: {
-        api_key: process.env.SENDGRID_API,
+        api_key: SENDGRID_API,
       },
     })
   );
@@ -94,7 +98,7 @@ const sendRJ3FilesEmail = async (req, res) => {
   const transporterRJXX3Files = nodemailer.createTransport(
     sgTransport({
       auth: {
-        api_key: process.env.SENDGRID_API,
+        api_key: SENDGRID_API,
       },
     })
   );
@@ -113,7 +117,7 @@ const sendRJ3FilesEmail = async (req, res) => {
   // RJXX3 email @Rimbo
   const RimboEmail = {
     from: "Rimbo info@rimbo.rent",
-    to: testEmail, // Rimbo email
+    to: RIMBO_EMAIL, // Rimbo email
     subject: `${tenancyID} - ${tenantsName} ready for Screening`,
     attachments: [
       {
@@ -148,6 +152,8 @@ const sendRJ3FilesEmail = async (req, res) => {
       landlordName,
       landlordPhone,
       landlordEmail,
+      URL_ACCEPT_TT_BY_RIMBO,
+      URL_REJECT_TT_BY_RIMBO,
     },
   };
 
@@ -178,7 +184,7 @@ const sendRJ11Emails = async (req, res) => {
   const transporterRJ11 = nodemailer.createTransport(
     sgTransport({
       auth: {
-        api_key: process.env.SENDGRID_API,
+        api_key: SENDGRID_API,
       },
     })
   );
@@ -197,7 +203,7 @@ const sendRJ11Emails = async (req, res) => {
   // RJ11 Email  @PM/Agency
   const pmEmail = {
     from: "Rimbo info@rimbo.rent",
-    to: testEmail, // pm's email
+    to: agencyEmailPerson, // pm's email
     subject: `Prospect Tenancy in ${rentalAddress} approved!`,
     attachments: [
       {
@@ -244,7 +250,7 @@ const sendRJ12Emails = async (req, res) => {
   const transporterRJ12 = nodemailer.createTransport(
     sgTransport({
       auth: {
-        api_key: process.env.SENDGRID_API,
+        api_key: SENDGRID_API,
       },
     })
   );
@@ -252,7 +258,7 @@ const sendRJ12Emails = async (req, res) => {
   const transporterRJ12R = nodemailer.createTransport(
     sgTransport({
       auth: {
-        api_key: process.env.SENDGRID_API,
+        api_key: SENDGRID_API,
       },
     })
   );
@@ -281,7 +287,7 @@ const sendRJ12Emails = async (req, res) => {
   // RJ12 Email  @PM/Agency
   const pmEmail = {
     from: "Rimbo info@rimbo.rent",
-    to: testEmail, // pm's email
+    to: agencyEmailPerson, // pm's email
     subject: `${tenancyID} - Prospect Tenancy in ${rentalAddress} rejected.`,
 
     attachments: [
@@ -308,7 +314,7 @@ const sendRJ12Emails = async (req, res) => {
   // RJ12 Email  @Rimbo
   const RimboEmail = {
     from: "Rimbo info@rimbo.rent",
-    to: testEmail, // rimbo email
+    to: RIMBO_EMAIL, // rimbo email
     subject: `Prospect Tenancy in ${rentalAddress} rejected.`,
     attachments: [
       {
@@ -364,7 +370,7 @@ const sendRJ13Email = async (req, res) => {
   const transporterRJ13 = nodemailer.createTransport(
     sgTransport({
       auth: {
-        api_key: process.env.SENDGRID_API,
+        api_key: SENDGRID_API,
       },
     })
   );
@@ -382,7 +388,7 @@ const sendRJ13Email = async (req, res) => {
 
   const RimboEmail = {
     from: "Rimbo info@rimbo.rent",
-    to: testEmail, // Rimbo Email
+    to: RIMBO_EMAIL, // Rimbo Email
     subject: `${tenancyID} - ${agencyName} rejected tenancy after Rimbo Screening`,
     attachments: [
       {
@@ -432,7 +438,7 @@ const sendNotificationRimbo = async (req, res) => {
   const transporterE2R = nodemailer.createTransport(
     sgTransport({
       auth: {
-        api_key: process.env.SENDGRID_API,
+        api_key: SENDGRID_API,
       },
     })
   );
@@ -451,7 +457,7 @@ const sendNotificationRimbo = async (req, res) => {
   // RJ15 email @Rimbo
   const RimboEmail = {
     from: "Rimbo info@rimbo.rent",
-    to: testEmail, // Rimbo Email
+    to: RIMBO_EMAIL, // Rimbo Email
     subject: `${tenancyID} - ${agencyName}-${tenantsName}-Registration Start`,
     attachments: [
       {
@@ -504,7 +510,7 @@ const sendRJ3FormEmail = async (req, res) => {
   const transporterRJ15 = nodemailer.createTransport(
     sgTransport({
       auth: {
-        api_key: process.env.SENDGRID_API,
+        api_key: SENDGRID_API,
       },
     })
   );
@@ -523,7 +529,7 @@ const sendRJ3FormEmail = async (req, res) => {
   // RJ15 email @Rimbo
   const RimbosEmail = {
     from: "Rimbo info@rimbo.rent",
-    to: testEmail, // Rimbo email
+    to: RIMBO_EMAIL, // Rimbo email
     subject: `${tenancyID} - ${tenantsName} Card successfully registered`,
     attachments: [
       {
@@ -544,6 +550,7 @@ const sendRJ3FormEmail = async (req, res) => {
       tenancyID,
       agencyName,
       rentalAddress,
+      URL_ACCEPT_TT_CARD_BY_RIMBO,
     },
   };
 
@@ -576,7 +583,7 @@ const sendRJ15EmailsTT = async (req, res) => {
   const transporterRJXX5 = nodemailer.createTransport(
     sgTransport({
       auth: {
-        api_key: process.env.SENDGRID_API,
+        api_key: SENDGRID_API,
       },
     })
   );
@@ -646,7 +653,7 @@ const sendRJ15EmailsPM = async (req, res) => {
   const transporterRJ16 = nodemailer.createTransport(
     sgTransport({
       auth: {
-        api_key: process.env.SENDGRID_API,
+        api_key: SENDGRID_API,
       },
     })
   );
@@ -665,7 +672,7 @@ const sendRJ15EmailsPM = async (req, res) => {
   // RJ16 email @PM
   const PMsEmail = {
     from: "Rimbo info@rimbo.rent",
-    to: testEmail, // PM email
+    to: agencyEmailPerson, // PM email
     subject: `Tenancy registration successfully completed`,
     attachments: [
       {
@@ -705,7 +712,7 @@ const sendRJ18EmailTT = async (req, res) => {
   const transporterRJ17 = nodemailer.createTransport(
     sgTransport({
       auth: {
-        api_key: process.env.SENDGRID_API,
+        api_key: SENDGRID_API,
       },
     })
   );
@@ -770,7 +777,7 @@ const sendRJ18EmailPM = async (req, res) => {
   const transporterRJ20 = nodemailer.createTransport(
     sgTransport({
       auth: {
-        api_key: process.env.SENDGRID_API,
+        api_key: SENDGRID_API,
       },
     })
   );
@@ -789,7 +796,7 @@ const sendRJ18EmailPM = async (req, res) => {
   // RJ20 email @PM
   const PMEmail = {
     from: "Rimbo info@rimbo.rent",
-    to: testEmail, // PM email
+    to: agencyEmailPerson, // PM email
     subject: `Amazing! The property is now covered by Rimbo`,
 
     attachments: [

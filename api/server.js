@@ -2,6 +2,7 @@
 import path from "path";
 import express from "express";
 import dotenv from "dotenv";
+import customEnv from "custom-env";
 import bodyParser from "body-parser";
 import colors from "colors";
 import morgan from "morgan";
@@ -14,13 +15,11 @@ import Stripe from "stripe";
 import emailRoutes from "./routes/emailRoutes.js";
 import emailRoutesEs from "./routes/emailRoutesEs.js";
 
-// Use dotenv to store variables
 dotenv.config();
-
-// Start our app with Express
+customEnv.env(true);
 const app = express();
 
-// Enable Cors middleware
+// Cors middleware
 app.set("trust proxy", true);
 app.use(cors());
 app.use(function (req, res, next) {
@@ -84,11 +83,13 @@ app.post("/stripe/card-wallet", async (req, res) => {
 app.use(notFound);
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 8080;
+const { PORT } = process.env;
+
+const Port = PORT || 8080;
 
 app.listen(
   PORT,
   console.log(
-    `Server runing in ${process.env.NODE_ENV} port ${PORT}`.yellow.bold
+    `Server runing in ${process.env.NODE_ENV} port ${Port}`.yellow.bold
   )
 );
